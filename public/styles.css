@@ -14,7 +14,8 @@ button {
   border-radius: 3px;
   box-sizing: border-box;
   color: #fff;
-  font: 600 14px 'Helvetica Neue', Helvetica, sans-serif;
+  font: 600 14px/22px 'Helvetica Neue', Helvetica, sans-serif;
+  height: 40px;
   padding: 10px;
   width: 100%;
 }
@@ -50,17 +51,7 @@ button {
   float: left;
 }
 
-@keyframes pulse {
-  from: {
-    background-color: red;
-  }
-  to: {
-    background-color: yellow;
-  }
-}
-
 .loading {
-  animation: pulse 4s ease .2s infinite;
   background-color: #00adef;
   border-radius: 50%;
   height: 10px;

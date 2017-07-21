@@ -2,7 +2,6 @@ const SIDEBAR_WIDTH = 300;
 
 export const Player = {
   view({ attrs }) {
-    console.log(window.innerWidth);
     return (
       m('.player',
         m('iframe[frameborder=0][allowfullscreen]', {

@@ -9,7 +9,6 @@ var Player = {
   view: function view(ref) {
     var attrs = ref.attrs;
 
-    console.log(window.innerWidth);
     return (
       m('.player',
         m('iframe[frameborder=0][allowfullscreen]', {
@@ -51,10 +50,17 @@ var Sidebar = {
 var listeners = [];
 var subscribe = function (fn) { return listeners.push(fn); };
 
+var rowCount = (function() {
+  var rowHeight = 70; // includes padding of single row
+  var deadHeight = 70; // button + padding = dead height
+  var rows = Math.floor((window.innerHeight - deadHeight) / rowHeight);
+  return rows;
+})();
+
 var state = {
   activeVideoId: '225408543',
   isLoadingVideo: true,
-  videos: Array(10).fill(null),
+  videos: Array(rowCount).fill(null),
 };
 
 var notify = function () { return listeners.forEach(function (fn) { return fn(state); }); };
@@ -75,7 +81,7 @@ function pickVideo(i) {
 
 
 function refetch() {
-  state.videos = Array(10).fill(null);
+  state.videos = Array(rowCount).fill(null);
   state.isLoadingVideo = true;
   notify();
   setTimeout(function () {
@@ -86,7 +92,6 @@ function refetch() {
 }
 
 subscribe(function () { return m$1.redraw(); });
-
 window.onresize = function () { return m$1.redraw(); };
 
 function App() {

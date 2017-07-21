@@ -1,9 +1,15 @@
 import m from 'mithril';
 import { Player, Sidebar } from './components.js';
-import { clickedRandomButton, refetch, pickVideo, subscribe, state } from './model.js';
+import {
+  clickedRandomButton,
+  pickVideo,
+  recalculateRows,
+  refetch,
+  state,
+  subscribe,
+} from './model.js';
 
 subscribe(() => m.redraw());
-
 window.onresize = () => m.redraw();
 
 function App() {

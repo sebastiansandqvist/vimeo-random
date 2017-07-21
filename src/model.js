@@ -1,10 +1,17 @@
 const listeners = [];
 export const subscribe = (fn) => listeners.push(fn);
 
+const rowCount = (function() {
+  const rowHeight = 70; // includes padding of single row
+  const deadHeight = 70; // button + padding = dead height
+  const rows = Math.floor((window.innerHeight - deadHeight) / rowHeight);
+  return rows;
+})();
+
 export const state = {
   activeVideoId: '225408543',
   isLoadingVideo: true,
-  videos: Array(10).fill(null),
+  videos: Array(rowCount).fill(null),
 }
 
 const notify = () => listeners.forEach((fn) => fn(state));
@@ -30,7 +37,7 @@ export function clickedRandomButton() {
 }
 
 export function refetch() {
-  state.videos = Array(10).fill(null);
+  state.videos = Array(rowCount).fill(null);
   state.isLoadingVideo = true;
   notify();
   setTimeout(() => {
