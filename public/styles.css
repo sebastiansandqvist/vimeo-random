@@ -61,7 +61,7 @@ button {
 
 .loading {
   animation: pulse 4s ease .2s infinite;
-  background-color: green;
+  background-color: #00adef;
   border-radius: 50%;
   height: 10px;
   position: relative;

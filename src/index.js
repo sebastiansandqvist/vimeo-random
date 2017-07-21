@@ -4,6 +4,8 @@ import { clickedRandomButton, refetch, pickVideo, subscribe, state } from './mod
 
 subscribe(() => m.redraw());
 
+window.onresize = () => m.redraw();
+
 function App() {
   refetch();
   return {

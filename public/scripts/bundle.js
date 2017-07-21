@@ -87,6 +87,8 @@ function refetch() {
 
 subscribe(function () { return m$1.redraw(); });
 
+window.onresize = function () { return m$1.redraw(); };
+
 function App() {
   refetch();
   return {
