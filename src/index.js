@@ -9,12 +9,10 @@ function App() {
   return {
     view() {
       return [
-        m('.contain',
-          m(Player, { id: state.activeVideoId }),
-          m(Sidebar, { videos: state.videos, onSelection: pickVideo }),
-          m('.buttons',
-            m('button', { onclick: clickedRandomButton }, 'Pick Random Video'),
-            m('button', { onclick: refetch }, 'Fetch New Batch')
+        m(Player, { id: state.activeVideoId }),
+        m(Sidebar, { videos: state.videos, onSelection: pickVideo },
+          m('.button-area',
+            m('button', { onclick: refetch }, 'New Random Batch')
           )
         )
       ];

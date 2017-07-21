@@ -3,14 +3,19 @@
 
 m$1 = m$1 && m$1.hasOwnProperty('default') ? m$1['default'] : m$1;
 
+var SIDEBAR_WIDTH = 300;
+
 var Player = {
   view: function view(ref) {
     var attrs = ref.attrs;
 
+    console.log(window.innerWidth);
     return (
       m('.player',
-        m('iframe[height=400][width=760][frameborder=0][allowfullscreen]', {
-          src: ("https://player.vimeo.com/video/" + (attrs.id))
+        m('iframe[frameborder=0][allowfullscreen]', {
+          height: ((window.innerHeight) + "px"),
+          src: ("https://player.vimeo.com/video/" + (attrs.id)),
+          width: ((window.innerWidth - SIDEBAR_WIDTH) + "px"),
         })
       )
     );
@@ -20,17 +25,24 @@ var Player = {
 var Sidebar = {
   view: function view(ref) {
     var attrs = ref.attrs;
+    var children = ref.children;
 
     return (
       m('.sidebar',
-        attrs.videos.map(function (video, i) { return video ? (
-          m('.sidebar-video', { onclick: function onclick() { attrs.onSelection(i); }},
-            m('img.sidebar-video-thumbnail', { src: video.thumbnail, alt: video.title }),
-            m('.sidebar-video-title', video.title)
-          )
-        ) : (
-          m('.sidebar-video', m('.loading'))
-        ); })
+        children,
+        m('div',
+          attrs.videos.map(function (video, i) { return video ? (
+            m('.sidebar-video', { onclick: function onclick() { attrs.onSelection(i); }},
+              m('img.sidebar-video-thumbnail', {
+                alt: video.title,
+                src: ("https://i.vimeocdn.com/video/" + (video.thumbnail) + "_90x60.jpg"),
+              }),
+              m('.sidebar-video-title', video.title)
+            )
+          ) : (
+            m('.sidebar-video', m('.loading'))
+          ); })
+        )
       )
     );
   }
@@ -46,8 +58,6 @@ var state = {
 };
 
 var notify = function () { return listeners.forEach(function (fn) { return fn(state); }); };
-var getRandomItemIndex = function (arr) { return Math.floor(Math.random() * arr.length); };
-
 function pickVideo(i) {
   if (state.isLoadingVideo) { return; }
   var video = state.videos[i];
@@ -56,16 +66,13 @@ function pickVideo(i) {
   state.isLoadingVideo = true;
   notify();
   setTimeout(function () {
-    state.videos[i] = { id: '225408543', title: 'foo', thumbnail: ("http://lorempizza.com/40/40/" + i)};
+    state.videos[i] = { id: '225408543', title: 'foo', thumbnail: '45546404'};
     state.isLoadingVideo = false;
     notify();
   }, 1000);
 }
 
-function clickedRandomButton() {
-  var i = getRandomItemIndex(state.videos);
-  pickVideo(i);
-}
+
 
 function refetch() {
   state.videos = Array(10).fill(null);
@@ -85,12 +92,10 @@ function App() {
   return {
     view: function view() {
       return [
-        m$1('.contain',
-          m$1(Player, { id: state.activeVideoId }),
-          m$1(Sidebar, { videos: state.videos, onSelection: pickVideo }),
-          m$1('.buttons',
-            m$1('button', { onclick: clickedRandomButton }, 'Pick Random Video'),
-            m$1('button', { onclick: refetch }, 'Fetch New Batch')
+        m$1(Player, { id: state.activeVideoId }),
+        m$1(Sidebar, { videos: state.videos, onSelection: pickVideo },
+          m$1('.button-area',
+            m$1('button', { onclick: refetch }, 'New Random Batch')
           )
         )
       ];

@@ -18,7 +18,7 @@ export function pickVideo(i) {
   state.isLoadingVideo = true;
   notify();
   setTimeout(() => {
-    state.videos[i] = { id: '225408543', title: 'foo', thumbnail: `http://lorempizza.com/40/40/${i}`}
+    state.videos[i] = { id: '225408543', title: 'foo', thumbnail: '45546404'}
     state.isLoadingVideo = false;
     notify();
   }, 1000);
