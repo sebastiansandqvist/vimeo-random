@@ -49,6 +49,10 @@ button {
   font: 400 14px/60px 'Helvetica Neue', Helvetica, sans-serif;
   text-indent: 10px;
   float: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 180px;
 }
 
 .loading {

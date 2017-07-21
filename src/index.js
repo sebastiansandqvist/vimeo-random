@@ -3,7 +3,6 @@ import { Player, Sidebar } from './components.js';
 import {
   clickedRandomButton,
   pickVideo,
-  recalculateRows,
   refetch,
   state,
   subscribe,

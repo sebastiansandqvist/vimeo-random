@@ -24,7 +24,7 @@ export const Sidebar = {
             m('.sidebar-video', { onclick() { attrs.onSelection(i); }},
               m('img.sidebar-video-thumbnail', {
                 alt: video.title,
-                src: `https://i.vimeocdn.com/video/${video.thumbnail}_90x60.jpg`,
+                src: `https://i.vimeocdn.com/video/${video.thumbset}_90x60.jpg`,
               }),
               m('.sidebar-video-title', video.title)
             )
