@@ -15,44 +15,40 @@ function getBatch(size) {
   return slice;
 }
 
-const getOne = () => getBatch(0)[0];
+const getOne = () => getBatch(1)[0];
 
-const rowCount = (function() {
+function getRowCount() {
   const rowHeight = 70; // includes padding of single row
   const deadHeight = 70; // button + padding = dead height
   const rows = Math.floor((window.innerHeight - deadHeight) / rowHeight);
   return rows;
-})();
+};
 
-const state = {
+console.log(getOne());
+
+export const state = {
   activeVideoId: getOne().id,
-  videos: getBatch(rowCount)
+  videos: getBatch(getRowCount())
 }
 
 const listeners = [];
-const subscribe = (fn) => listeners.push(fn);
+export const subscribe = (fn) => listeners.push(fn);
 const notify = () => listeners.forEach((fn) => fn(state));
 
 const getRandomItemIndex = (arr) => Math.floor(Math.random() * arr.length);
 
-function pickVideo(i) {
+export function pickVideo(i) {
   const video = state.videos[i];
   state.activeVideoId = video.id;
   state.videos[i] = getOne();
   notify();
 }
 
-function clickedRandomButton() {
+export function clickedRandomButton() {
   pickVideo(getRandomItemIndex(state.videos));
 }
 
-function refetch() {
-  state.videos = getBatch(rowCount);
+export function refetch() {
+  state.videos = getBatch(getRowCount());
   notify();
 }
-
-export subscribe;
-export refetch;
-export clickedRandomButton;
-export pickVideo;
-export state;
