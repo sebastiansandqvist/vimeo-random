@@ -1,3 +1,53 @@
-body {
+.contain {
+  margin: 0 auto;
+  width: 960px;
+}
+
+.player {
+  float: left;
+}
+
+.sidebar {
+  float: right;
+  width: 200px;
+}
+
+.buttons {
+  clear: both;
+  float: right;
+}
+
+.sidebar-video {
+  background: green;
+  border-bottom: 1px solid black;
+  height: 40px;
+}
+
+.sidebar-video-thumb {
   background: red;
+  float: left;
+}
+
+.sidebar-video-title {
+  background: orange;
+  float: left;
+}
+
+@keyframes pulse {
+  from: {
+    opacity: 0;
+  }
+  to: {
+    opacity: 1;
+  }
+}
+
+.loading {
+  animation: pulse 1s infinite;
+  background: blue;
+  border-radius: 50%;
+  height: 10px;
+  position: relative;
+  top: 15px;
+  width: 10px;
 }
