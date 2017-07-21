@@ -1,6 +1,6 @@
 import m from 'mithril';
 import { Player, Sidebar } from './components.js';
-import { clickedRandomButton, clickedRefetchButton, refetch, pickVideo, subscribe, state } from './model.js';
+import { clickedRandomButton, refetch, pickVideo, subscribe, state } from './model.js';
 
 subscribe(() => m.redraw());
 
