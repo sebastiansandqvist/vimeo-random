@@ -37,8 +37,15 @@ button {
 .sidebar-video {
   border-bottom: 10px solid #000;
   cursor: pointer;
+  display: block;
   height: 60px;
+  opacity: 0;
   overflow: hidden;
+  transition: opacity 1s ease;
+}
+
+.sidebar-video.entering {
+  opacity: 1;
 }
 
 .sidebar-video-thumbnail {
@@ -54,14 +61,4 @@ button {
   white-space: nowrap;
   text-overflow: ellipsis;
   width: 180px;
-}
-
-.loading {
-  background-color: #00adef;
-  border-radius: 50%;
-  height: 10px;
-  position: relative;
-  left: 40px;
-  top: 25px;
-  width: 10px;
 }

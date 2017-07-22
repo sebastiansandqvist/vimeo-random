@@ -21,22 +21,38 @@ var Player = {
   }
 };
 
-var Thumbnail = {
-  view: function view(ref) {
-    var attrs = ref.attrs;
+function VideoLink() {
+  var state = {};
+  return {
+    oncreate: function oncreate(ref) {
+      var dom = ref.dom;
 
-    return (
-      m('img.sidebar-video-thumbnail', {
-        alt: 'video thumbnail',
-        src: ("https://i.vimeocdn.com/video/" + (attrs.thumbnail) + "_90x60.jpg"),
-        oncreate: function oncreate(ref) {
-        var dom = ref.dom;
- dom.style.display = 'none'; },
-        onload: function onload(event) { event.target.style.display = 'inline-block'; }
-      })
-    );
-  }
-};
+      dom.getElementsByTagName('img')[0].onload = function() {
+        dom.className += ' entering';
+      };
+    },
+    view: function view(ref) {
+      var attrs = ref.attrs;
+
+      return (
+        m('a.sidebar-video', {
+          href: ("#" + (attrs.video.id)),
+          onclick: function onclick(event) {
+            if (event.ctrlKey || event.metaKey) { return; }
+            attrs.onSelection(attrs.index);
+            event.preventDefault();
+          }
+        },
+          m('img.sidebar-video-thumbnail', {
+            alt: 'Video thumbnail',
+            src: ("https://i.vimeocdn.com/video/" + (attrs.video.thumbnail) + "_90x60.jpg"),
+          }),
+          m('.sidebar-video-title', attrs.video.title)
+        )
+      );
+    }
+  };
+}
 
 var Sidebar = {
   view: function view(ref) {
@@ -47,14 +63,18 @@ var Sidebar = {
       m('.sidebar',
         children,
         m('div',
-          attrs.videos.map(function (video, i) { return video ? (
-            m('.sidebar-video', { onclick: function onclick() { attrs.onSelection(i); }},
-              m(Thumbnail, { thumbnail: video.thumbnail }),
-              m('.sidebar-video-title', video.title)
-            )
-          ) : (
-            m('.sidebar-video', m('.loading'))
+          attrs.videos.map(function (video, index) { return (
+            m(VideoLink, { video: video, index: index, onSelection: attrs.onSelection, key: video.id })
           ); })
+        //   attrs.videos.map((video, i) => video ? (
+        //     m('.sidebar-video', { onclick() { attrs.onSelection(i); }},
+        //       m(Thumbnail, { thumbnail: video.thumbnail }),
+        //       m('.sidebar-video-title', video.title)
+        //     )
+        //   ) : (
+        //     m('.sidebar-video', m('.loading'))
+        //   ))
+        // )
         )
       )
     );
@@ -80,7 +100,6 @@ function shuffle(array) {
 }
 
 function shuffleAndSave(db$$1) {
-  console.log('Had no local db');
   var shuffled = shuffle(db$$1);
   window.localStorage.setItem('random-db', JSON.stringify(shuffled));
   return shuffled;
@@ -90,7 +109,6 @@ var localDb = window.localStorage.getItem('random-db');
 var randomizedDb = localDb ? JSON.parse(localDb) : shuffleAndSave(db);
 
 var localStartIndex = parseInt(window.localStorage.getItem('start-index'), 10);
-console.log({ localStartIndex: localStartIndex });
 
 var startIndex = localStartIndex || 0;
 function getBatch(size) {
