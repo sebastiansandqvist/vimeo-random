@@ -27,7 +27,7 @@ function getRowCount() {
 console.log(getOne());
 
 export const state = {
-  activeVideoId: getOne().id,
+  activeVideoId: window.location.hash.slice(1) || getOne().id,
   videos: getBatch(getRowCount())
 };
 
@@ -41,6 +41,7 @@ export function pickVideo(i) {
   const video = state.videos[i];
   state.activeVideoId = video.id;
   state.videos[i] = getOne();
+  window.location.hash = video.id;
   notify();
 }
 
