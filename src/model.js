@@ -29,7 +29,7 @@ console.log(getOne());
 export const state = {
   activeVideoId: getOne().id,
   videos: getBatch(getRowCount())
-}
+};
 
 const listeners = [];
 export const subscribe = (fn) => listeners.push(fn);
