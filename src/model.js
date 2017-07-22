@@ -2,7 +2,6 @@ import db from './db.js';
 import { shuffle } from './util.js';
 
 function shuffleAndSave(db) {
-  console.log('Had no local db');
   const shuffled = shuffle(db);
   window.localStorage.setItem('random-db', JSON.stringify(shuffled));
   return shuffled;
@@ -12,7 +11,6 @@ const localDb = window.localStorage.getItem('random-db');
 const randomizedDb = localDb ? JSON.parse(localDb) : shuffleAndSave(db);
 
 const localStartIndex = parseInt(window.localStorage.getItem('start-index'), 10);
-console.log({ localStartIndex });
 
 let startIndex = localStartIndex || 0;
 function getBatch(size) {
