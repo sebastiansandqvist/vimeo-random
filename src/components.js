@@ -1,5 +1,12 @@
 const SIDEBAR_WIDTH = 300;
 
+// let shouldAutoplay = false;
+// function autoplay() {
+//   if (shouldAutoplay) return '?autoplay=1';
+//   shouldAutoplay = true;
+//   return '';
+// }
+
 export const Player = {
   view({ attrs }) {
     return (
@@ -52,15 +59,6 @@ export const Sidebar = {
           attrs.videos.map((video, index) => (
             m(VideoLink, { video, index, onSelection: attrs.onSelection, key: video.id })
           ))
-        //   attrs.videos.map((video, i) => video ? (
-        //     m('.sidebar-video', { onclick() { attrs.onSelection(i); }},
-        //       m(Thumbnail, { thumbnail: video.thumbnail }),
-        //       m('.sidebar-video-title', video.title)
-        //     )
-        //   ) : (
-        //     m('.sidebar-video', m('.loading'))
-        //   ))
-        // )
         )
       )
     );

@@ -5,6 +5,13 @@ m$1 = m$1 && m$1.hasOwnProperty('default') ? m$1['default'] : m$1;
 
 var SIDEBAR_WIDTH = 300;
 
+// let shouldAutoplay = false;
+// function autoplay() {
+//   if (shouldAutoplay) return '?autoplay=1';
+//   shouldAutoplay = true;
+//   return '';
+// }
+
 var Player = {
   view: function view(ref) {
     var attrs = ref.attrs;
@@ -66,15 +73,6 @@ var Sidebar = {
           attrs.videos.map(function (video, index) { return (
             m(VideoLink, { video: video, index: index, onSelection: attrs.onSelection, key: video.id })
           ); })
-        //   attrs.videos.map((video, i) => video ? (
-        //     m('.sidebar-video', { onclick() { attrs.onSelection(i); }},
-        //       m(Thumbnail, { thumbnail: video.thumbnail }),
-        //       m('.sidebar-video-title', video.title)
-        //     )
-        //   ) : (
-        //     m('.sidebar-video', m('.loading'))
-        //   ))
-        // )
         )
       )
     );
@@ -141,6 +139,8 @@ var listeners = [];
 var subscribe = function (fn) { return listeners.push(fn); };
 var notify = function () { return listeners.forEach(function (fn) { return fn(state); }); };
 
+var getRandomItemIndex = function (arr) { return Math.floor(Math.random() * arr.length); };
+
 function pickVideo(i) {
   var video = state.videos[i];
   state.activeVideoId = video.id;
@@ -149,7 +149,9 @@ function pickVideo(i) {
   notify();
 }
 
-
+function pickRandomVideo() {
+  pickVideo(getRandomItemIndex(state.videos));
+}
 
 function refetch() {
   state.videos = getBatch(getRowCount());
@@ -159,13 +161,19 @@ function refetch() {
 subscribe(function () { return m$1.redraw(); });
 window.onresize = function () { return m$1.redraw(); };
 
+window.addEventListener('keyup', function (event) {
+  if (event.key === 'n') { pickRandomVideo(); }
+  else if (event.key === 'r') { refetch(); }
+});
+
 var App = {
   view: function view() {
     return [
       m$1(Player, { id: state.activeVideoId }),
       m$1(Sidebar, { videos: state.videos, onSelection: pickVideo },
         m$1('.button-area',
-          m$1('button', { onclick: refetch }, 'New Random Batch')
+          m$1('button', { onclick: refetch }, m$1('u', 'R'), 'andom Batch'),
+          m$1('button.alt', { onclick: pickRandomVideo }, m$1('u', 'N'), 'ext')
         )
       )
     ];

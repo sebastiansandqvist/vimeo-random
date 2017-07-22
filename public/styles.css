@@ -18,7 +18,13 @@ button {
   font: 600 14px/22px 'Helvetica Neue', Helvetica, sans-serif;
   height: 40px;
   padding: 10px;
-  width: 100%;
+  width: 190px;
+}
+
+button.alt {
+  background: #789;
+  margin-left: 10px;
+  width: 80px;
 }
 
 .contain {

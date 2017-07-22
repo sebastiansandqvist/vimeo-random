@@ -53,7 +53,7 @@ export function pickVideo(i) {
   notify();
 }
 
-export function clickedRandomButton() {
+export function pickRandomVideo() {
   pickVideo(getRandomItemIndex(state.videos));
 }
 

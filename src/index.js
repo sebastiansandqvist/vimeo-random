@@ -1,7 +1,7 @@
 import m from 'mithril';
 import { Player, Sidebar } from './components.js';
 import {
-  clickedRandomButton,
+  pickRandomVideo,
   pickVideo,
   refetch,
   state,
@@ -11,13 +11,19 @@ import {
 subscribe(() => m.redraw());
 window.onresize = () => m.redraw();
 
+window.addEventListener('keyup', (event) => {
+  if (event.key === 'n') pickRandomVideo();
+  else if (event.key === 'r') refetch();
+});
+
 const App = {
   view() {
     return [
       m(Player, { id: state.activeVideoId }),
       m(Sidebar, { videos: state.videos, onSelection: pickVideo },
         m('.button-area',
-          m('button', { onclick: refetch }, 'New Random Batch')
+          m('button', { onclick: refetch }, m('u', 'R'), 'andom Batch'),
+          m('button.alt', { onclick: pickRandomVideo }, m('u', 'N'), 'ext')
         )
       )
     ];
