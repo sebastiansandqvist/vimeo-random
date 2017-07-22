@@ -1,10 +1,22 @@
 import db from './db.js';
 import { shuffle } from './util.js';
 
-const randomizedDb = shuffle(db);
+function shuffleAndSave(db) {
+  console.log('Had no local db');
+  const shuffled = shuffle(db);
+  window.localStorage.setItem('random-db', JSON.stringify(shuffled));
+  return shuffled;
+}
 
-let startIndex = 0;
+const localDb = window.localStorage.getItem('random-db');
+const randomizedDb = localDb ? JSON.parse(localDb) : shuffleAndSave(db);
+
+const localStartIndex = parseInt(window.localStorage.getItem('start-index'), 10);
+console.log({ localStartIndex });
+
+let startIndex = localStartIndex || 0;
 function getBatch(size) {
+  window.localStorage.setItem('start-index', startIndex);
   const slice = randomizedDb.slice(startIndex, startIndex + size);
   startIndex += size;
   // this wraps to start if you've reached the end
@@ -23,8 +35,6 @@ function getRowCount() {
   const rows = Math.floor((window.innerHeight - deadHeight) / rowHeight);
   return rows;
 };
-
-console.log(getOne());
 
 export const state = {
   activeVideoId: window.location.hash.slice(1) || getOne().id,

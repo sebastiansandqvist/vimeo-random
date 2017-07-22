@@ -6,7 +6,7 @@ export const Player = {
       m('.player',
         m('iframe[frameborder=0][allowfullscreen]', {
           height: `${window.innerHeight}px`,
-          src: `https://player.vimeo.com/video/${attrs.id}&autoplay=true`,
+          src: `https://player.vimeo.com/video/${attrs.id}?autoplay=1`,
           width: `${window.innerWidth - SIDEBAR_WIDTH}px`,
         })
       )

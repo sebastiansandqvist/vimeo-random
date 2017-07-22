@@ -13,7 +13,7 @@ var Player = {
       m('.player',
         m('iframe[frameborder=0][allowfullscreen]', {
           height: ((window.innerHeight) + "px"),
-          src: ("https://player.vimeo.com/video/" + (attrs.id)),
+          src: ("https://player.vimeo.com/video/" + (attrs.id) + "?autoplay=1"),
           width: ((window.innerWidth - SIDEBAR_WIDTH) + "px"),
         })
       )
@@ -79,10 +79,22 @@ function shuffle(array) {
   return array;
 }
 
-var randomizedDb = shuffle(db);
+function shuffleAndSave(db$$1) {
+  console.log('Had no local db');
+  var shuffled = shuffle(db$$1);
+  window.localStorage.setItem('random-db', JSON.stringify(shuffled));
+  return shuffled;
+}
 
-var startIndex = 0;
+var localDb = window.localStorage.getItem('random-db');
+var randomizedDb = localDb ? JSON.parse(localDb) : shuffleAndSave(db);
+
+var localStartIndex = parseInt(window.localStorage.getItem('start-index'), 10);
+console.log({ localStartIndex: localStartIndex });
+
+var startIndex = localStartIndex || 0;
 function getBatch(size) {
+  window.localStorage.setItem('start-index', startIndex);
   var slice = randomizedDb.slice(startIndex, startIndex + size);
   startIndex += size;
   // this wraps to start if you've reached the end
@@ -102,10 +114,8 @@ function getRowCount() {
   return rows;
 }
 
-console.log(getOne());
-
 var state = {
-  activeVideoId: getOne().id,
+  activeVideoId: window.location.hash.slice(1) || getOne().id,
   videos: getBatch(getRowCount())
 };
 
@@ -117,6 +127,7 @@ function pickVideo(i) {
   var video = state.videos[i];
   state.activeVideoId = video.id;
   state.videos[i] = getOne();
+  window.location.hash = video.id;
   notify();
 }
 
