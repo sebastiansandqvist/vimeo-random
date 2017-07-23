@@ -25,10 +25,10 @@ const App = {
           m('button', { onclick: refetch }, m('u', 'R'), 'andom Batch'),
           m('button.alt', { onclick: pickRandomVideo }, m('u', 'N'), 'ext')
         )
-      )
+      ),
     ];
-  }
-}
+  },
+};
 
 const mountNode = document.getElementById('app');
-m.mount(mountNode, App)
+m.mount(mountNode, App);

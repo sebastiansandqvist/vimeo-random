@@ -1,3 +1,5 @@
+import m from 'mithril';
+
 const SIDEBAR_WIDTH = 300;
 
 // let shouldAutoplay = false;
@@ -18,37 +20,34 @@ export const Player = {
         })
       )
     );
-  }
-}
+  },
+};
 
-function VideoLink() {
-  const state = {};
-  return {
-    oncreate({ dom }) {
-      dom.getElementsByTagName('img')[0].onload = function() {
-        dom.className += ' entering';
-      };
-    },
-    view({ attrs }) {
-      return (
-        m('a.sidebar-video', {
-          href: `#${attrs.video.id}`,
-          onclick(event) {
-            if (event.ctrlKey || event.metaKey) return;
-            attrs.onSelection(attrs.index);
-            event.preventDefault();
-          }
+const VideoLink = {
+  oncreate({ dom }) {
+    dom.getElementsByTagName('img')[0].onload = function() {
+      dom.className += ' entering';
+    };
+  },
+  view({ attrs }) {
+    return (
+      m('a.sidebar-video', {
+        href: `#${attrs.video.id}`,
+        onclick(event) {
+          if (event.ctrlKey || event.metaKey) return;
+          attrs.onSelection(attrs.index);
+          event.preventDefault();
         },
-          m('img.sidebar-video-thumbnail', {
-            alt: 'Video thumbnail',
-            src: `https://i.vimeocdn.com/video/${attrs.video.thumbnail}_90x60.jpg`,
-          }),
-          m('.sidebar-video-title', attrs.video.title)
-        )
-      );
-    }
-  };
-}
+      },
+      m('img.sidebar-video-thumbnail', {
+        alt: 'Video thumbnail',
+        src: `https://i.vimeocdn.com/video/${attrs.video.thumbnail}_90x60.jpg`,
+      }),
+      m('.sidebar-video-title', attrs.video.title)
+      )
+    );
+  },
+};
 
 export const Sidebar = {
   view({ attrs, children }) {
@@ -62,5 +61,5 @@ export const Sidebar = {
         )
       )
     );
-  }
-}
+  },
+};

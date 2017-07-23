@@ -1,14 +1,14 @@
 import db from './db.js';
 import { shuffle } from './util.js';
 
-function shuffleAndSave(db) {
+function shuffleAndSave() {
   const shuffled = shuffle(db);
   window.localStorage.setItem('random-db', JSON.stringify(shuffled));
   return shuffled;
 }
 
 const localDb = window.localStorage.getItem('random-db');
-const randomizedDb = localDb ? JSON.parse(localDb) : shuffleAndSave(db);
+const randomizedDb = localDb ? JSON.parse(localDb) : shuffleAndSave();
 
 const localStartIndex = parseInt(window.localStorage.getItem('start-index'), 10);
 
@@ -32,11 +32,11 @@ function getRowCount() {
   const deadHeight = 70; // button + padding = dead height
   const rows = Math.floor((window.innerHeight - deadHeight) / rowHeight);
   return rows;
-};
+}
 
 export const state = {
   activeVideoId: window.location.hash.slice(1) || getOne().id,
-  videos: getBatch(getRowCount())
+  videos: getBatch(getRowCount()),
 };
 
 const listeners = [];
