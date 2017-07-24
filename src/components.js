@@ -2,13 +2,6 @@ import m from 'mithril';
 
 const SIDEBAR_WIDTH = 300;
 
-// let shouldAutoplay = false;
-// function autoplay() {
-//   if (shouldAutoplay) return '?autoplay=1';
-//   shouldAutoplay = true;
-//   return '';
-// }
-
 export const Player = {
   view({ attrs }) {
     return (
