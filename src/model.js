@@ -1,29 +1,20 @@
 import db from './db.js';
-import { shuffle } from './util.js';
-
-const storage = (function determineAllowedStorage() {
-  try {
-    window.localStorage.setItem('foo', 'bar');
-    if (window.localStorage.getItem('foo') !== 'bar') return 'sessionStorage';
-  }
-  catch (err) { return 'sessionStorage'; }
-  return 'localStorage';
-})();
+import { shuffle, maybeStore } from './util.js';
 
 function shuffleAndSave() {
   const shuffled = shuffle(db);
-  window[storage].setItem('random-db', JSON.stringify(shuffled));
+  maybeStore('random-db', JSON.stringify(shuffled));
   return shuffled;
 }
 
-const localDb = window[storage].getItem('random-db');
+const localDb = window.localStorage.getItem('random-db');
 const randomizedDb = localDb ? JSON.parse(localDb) : shuffleAndSave();
 
-const localStartIndex = parseInt(window[storage].getItem('start-index'), 10);
+const localStartIndex = parseInt(window.localStorage.getItem('start-index'), 10);
 
 let startIndex = localStartIndex || 0;
 function getBatch(size) {
-  window[storage].setItem('start-index', startIndex);
+  maybeStore('start-index', startIndex);
   const slice = randomizedDb.slice(startIndex, startIndex + size);
   startIndex += size;
   // this wraps to start if you've reached the end
