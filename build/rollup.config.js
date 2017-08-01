@@ -1,5 +1,7 @@
 import buble from 'rollup-plugin-buble';
 import filesize from 'rollup-plugin-filesize';
+import resolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
 
 export default {
   entry: 'src/index.js',
@@ -10,6 +12,8 @@ export default {
   globals: { mithril: 'm' },
   plugins: [
     buble(),
+    resolve(),
+    commonjs(),
     filesize(),
   ],
 }
