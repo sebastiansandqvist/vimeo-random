@@ -117,6 +117,7 @@ var localStartIndex = parseInt(window.localStorage.getItem('start-index'), 10);
 
 var startIndex = localStartIndex || 0;
 function getBatch(size) {
+  if (size === 0) { return []; }
   maybeStore('start-index', startIndex);
   var slice = randomizedDb.slice(startIndex, startIndex + size);
   startIndex += size;
@@ -170,7 +171,7 @@ window.onresize = function () { return m.redraw(); };
 
 window.addEventListener('keyup', function (event) {
   if (event.key === 'n') { pickRandomVideo(); }
-  else if (event.key === 'r') { refetch(); }
+  else if (event.key === 'v') { refetch(); }
 });
 
 var App = {
@@ -179,7 +180,7 @@ var App = {
       m(Player, { id: state.activeVideoId }),
       m(Sidebar, { videos: state.videos, onSelection: pickVideo },
         m('.button-area',
-          m('button', { onclick: refetch }, m('u', 'R'), 'andom Batch'),
+          m('button', { onclick: refetch }, m('img', { src: '/images/random-icon.svg', height: '14' })),
           m('button.alt', { onclick: pickRandomVideo }, m('u', 'N'), 'ext')
         )
       ) ];

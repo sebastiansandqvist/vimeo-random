@@ -27,6 +27,10 @@ button.alt {
   width: 80px;
 }
 
+button img {
+  vertical-align: text-bottom;
+}
+
 .contain {
   margin: 0 auto;
   width: 960px;

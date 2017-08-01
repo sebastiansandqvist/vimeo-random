@@ -14,6 +14,7 @@ const localStartIndex = parseInt(window.localStorage.getItem('start-index'), 10)
 
 let startIndex = localStartIndex || 0;
 function getBatch(size) {
+  if (size === 0) return [];
   maybeStore('start-index', startIndex);
   const slice = randomizedDb.slice(startIndex, startIndex + size);
   startIndex += size;
