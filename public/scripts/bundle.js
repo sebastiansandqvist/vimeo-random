@@ -1,231 +1,8 @@
-(function (m) {
+(function (m,T) {
 'use strict';
 
 m = m && m.hasOwnProperty('default') ? m['default'] : m;
-
-var hasOwn = Object.prototype.hasOwnProperty;
-var toStr = Object.prototype.toString;
-
-function getType(x) {
-	var currentType = toStr.call(x).slice(8, -1).toLowerCase();
-	if (currentType === 'array' && x.length > 0) {
-		return '[array of ' + getType(x[0]) + 's]';
-	}
-	return currentType;
-}
-
-function typeStringFromArray(arr) {
-	if (arr.length === 1) {
-		return arr[0].type;
-	}
-	return arr.map(function(typeCheckFn) {
-		return typeCheckFn.type;
-	}).join(' || ');
-}
-
-function T(schema) {
-
-	return function(props, label) {
-
-		if (T.disabled) { return; }
-
-		var loop = function ( key ) {
-
-			if (hasOwn.call(schema, key)) {
-
-				var rules = Array.isArray(schema[key]) ? schema[key] : [schema[key]];
-				var success = rules.reduce(function(prev, rule) {
-					return prev || rule(props[key], label);
-				}, false);
-
-				if (!success) {
-
-					var errorMessage =
-						'Failed type check in ' + (label || 'unknown object') + '\n' +
-						'Expected prop \'' + key + '\' of type ' + typeStringFromArray(rules) + '\n' +
-						'You provided \'' + key + '\' of type ' + getType(props[key]);
-
-					if (T.throws) {
-						throw new TypeError(errorMessage);
-					}
-
-					// recursive call will report errors in next round of checks
-					if (typeStringFromArray(rules).indexOf('interface') > -1) {
-						return;
-					}
-
-					console.error(errorMessage);
-					return { v: errorMessage };
-				}
-			
-			}
-
-		};
-
-		for (var key in schema) {
-			var returned = loop( key );
-
-			if ( returned ) return returned.v;
-		}
-
-		for (var key$1 in props) {
-			if (hasOwn.call(props, key$1) && !hasOwn.call(schema, key$1)) {
-				var errorMessage$1 = 'Did not expect to find prop \'' + key$1 + '\' in ' + label;
-				console.error(errorMessage$1);
-				return errorMessage$1;
-			}
-		}
-
-		return null;
-
-	};
-
-}
-
-T.fn = T['function'] = function(x) {
-	return typeof x === 'function';
-};
-
-T.fn.type = 'function';
-
-T.str = T.string = function(x) {
-	return typeof x === 'string';
-};
-
-T.str.type = 'string';
-
-T.num = T.number = function(x) {
-	return typeof x === 'number';
-};
-
-T.num.type = 'number';
-
-T.date = function(x) {
-	return getType(x) === 'date';
-};
-
-T.date.type = 'date';
-
-T.NULL = T['null'] = function(x) {
-	return getType(x) === 'null';
-};
-
-T.NULL.type = 'null';
-
-T.nil = function(x) {
-	return typeof x === 'undefined' || getType(x) === 'null';
-};
-
-T.nil.type = 'nil';
-
-T.obj = T.object = function(x) {
-	return getType(x) === 'object';
-};
-
-T.obj.type = 'object';
-
-T.arr = T.array = function(x) {
-	return Array.isArray(x);
-};
-
-T.arr.type = 'array';
-
-T.arrayOf = function(propType) {
-
-	var arrayOfType = function(x) {
-
-		if (!Array.isArray(x)) {
-			return false;
-		}
-
-		for (var i = 0; i < x.length; i++) {
-			if (!propType(x[i])) {
-				return false;
-			}
-		}
-
-		return true;
-
-	};
-
-	arrayOfType.type = '[array of ' + propType.type + 's]';
-
-	return arrayOfType;
-
-};
-
-T.not = function(propType) {
-
-	var notType = function(x) {
-		return !propType(x);
-	};
-
-	notType.type = 'not(' + propType.type + ')';
-
-	return notType;
-
-};
-
-T['int'] = T.integer = function(x) {
-	return typeof x === 'number' && isFinite(x) && Math.floor(x) === x;
-};
-
-
-T.integer.type = 'integer';
-
-T.optional = T.undefined = function(x) {
-	return typeof x === 'undefined';
-};
-
-T.optional.type = 'undefined';
-
-T.bool = T['boolean'] = function(x) {
-	return typeof x === 'boolean';
-};
-
-T.bool.type = 'boolean';
-
-function quoteIfString(x) {
-	return typeof x === 'string' ? ('"' + x + '"') : x;
-}
-
-T.exact = function(exactValue) {
-	var exactType = function(x) {
-		return x === exactValue;
-	};
-	var formattedValue = quoteIfString(exactValue);
-	exactType.type = 'exact(' + formattedValue + ')';
-	return exactType;
-};
-
-T.oneOf = function(values) {
-	var oneOfType = function(x) {
-		return values.reduce(function (success, next) { return success || (x === next); }, false);
-	};
-	var formattedValue = '[' + values.map(quoteIfString).join(', ') + ']';
-	oneOfType.type = 'oneOf(' + formattedValue + ')';
-	return oneOfType;
-};
-
-T.any = function() {
-	return true;
-};
-
-T.any.type = 'any';
-
-// recursive
-T.schema = T['interface'] = function(schema) {
-	var schemaType = function(prop, label) {
-		return !T(schema)(prop, label || 'nested interface'); // returns null if success, so invert as boolean
-	};
-	schemaType.type = 'interface';
-	return schemaType;
-};
-
-T.disabled = false;
-T.throws = false;
-
-var index$1 = T;
+T = T && T.hasOwnProperty('default') ? T['default'] : T;
 
 var SIDEBAR_WIDTH = 300;
 
@@ -233,8 +10,8 @@ var px = function (x) { return (x + "px"); };
 var playerUrl = function (id) { return ("https://player.vimeo.com/video/" + id + "?autoplay=1"); };
 var thumbUrl = function (id) { return ("https://i.vimeocdn.com/video/" + id + "_90x60.jpg"); };
 
-var PlayerType = index$1({
-  id: index$1.string,
+var PlayerType = T({
+  id: T.string,
 });
 
 var Player = {
@@ -254,16 +31,16 @@ var Player = {
   },
 };
 
-var VideoType = index$1.schema({
-  id: index$1.string,
-  title: index$1.string,
-  thumbnail: index$1.string,
+var VideoType = T.schema({
+  id: T.string,
+  title: T.string,
+  thumbnail: T.string,
 });
 
-var VideoLinkType = index$1({
-  index: index$1.int,
-  key: index$1.string,
-  onSelection: index$1.fn,
+var VideoLinkType = T({
+  index: T.int,
+  key: T.string,
+  onSelection: T.fn,
   video: VideoType,
 });
 
@@ -296,9 +73,9 @@ var VideoLink = {
   },
 };
 
-var SidebarType = index$1({
-  onSelection: index$1.fn,
-  videos: index$1.arrayOf(VideoType),
+var SidebarType = T({
+  onSelection: T.fn,
+  videos: T.arrayOf(VideoType),
 });
 
 var Sidebar = {
@@ -441,4 +218,4 @@ var App = {
 var mountNode = document.getElementById('app');
 m.mount(mountNode, App);
 
-}(m));
+}(m,T));
