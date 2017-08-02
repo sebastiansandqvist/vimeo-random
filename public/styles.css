@@ -21,10 +21,18 @@ button {
   width: 190px;
 }
 
+button:active {
+  background: #08c;
+}
+
 button.alt {
   background: #657987;
   margin-left: 10px;
   width: 80px;
+}
+
+button.alt:active {
+  background: #567;
 }
 
 button img {
