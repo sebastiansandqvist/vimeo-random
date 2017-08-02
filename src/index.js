@@ -12,8 +12,8 @@ subscribe(() => m.redraw());
 window.onresize = () => m.redraw();
 
 window.addEventListener('keyup', (event) => {
-  if (event.key === 'n') pickRandomVideo();
-  else if (event.key === 'v') refetch();
+  if (event.key === 'n') return pickRandomVideo();
+  if (event.key === 'v') return refetch();
 });
 
 const App = {
@@ -22,7 +22,7 @@ const App = {
       m(Player, { id: state.activeVideoId }),
       m(Sidebar, { videos: state.videos, onSelection: pickVideo },
         m('.button-area',
-          m('button', { onclick: refetch }, m('img', { src: '/images/random-icon.svg', height: '14' })),
+          m('button', { onclick: refetch }, m('img', { src: '/images/icon-random.svg' })),
           m('button.alt', { onclick: pickRandomVideo }, m('u', 'N'), 'ext')
         )
       ),
