@@ -844,7 +844,6 @@ var db = [
   { "id": 33976373, "title": "The Scream - Sebastian Cosor - Safe-Frame.com", "thumbnail": "231027309" },
   { "id": 81836814, "title": "X-ray Body in Motion - Yoga", "thumbnail": "458041512" },
   { "id": 34678147, "title": "Men Throwing Rocks With The Other Hand", "thumbnail": "236377049" },
-  { "id": 163445503, "title": "The Making of A Fighting Chance", "thumbnail": "566810812" },
   { "id": 103975643, "title": "Lake of Dreams", "thumbnail": "525974398" },
   { "id": 55175112, "title": "A Better Place", "thumbnail": "381775526" },
   { "id": 82038912, "title": "Midday Traffic Time Collapsed and Reorganized by Color: San Diego Study #3", "thumbnail": "458289327" },
