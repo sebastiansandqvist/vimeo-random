@@ -242,7 +242,6 @@ export default [
   { "id": 62917185, "title": "MÅVI", "thumbnail": "433628544" },
   { "id": 157413485, "title": "Monarch Slave  Dr. Shaun D. speaks about project monarch -a conspiracy in Monarch Slavery in Canada", "thumbnail": "558689632" },
   { "id": 126267047, "title": "Sensational film footage! Berlin after the apocalypse in color and HD - Berlin In July 1945 (HD 1080p)", "thumbnail": "516655452" },
-  { "id": 145963216, "title": "Paige Spiranac Takes Golf To The Streets", "thumbnail": "544277735" },
   { "id": 113042536, "title": "Santorini Volcano History", "thumbnail": "499022377" },
   { "id": 41465466, "title": "Ask a Grown Man: Jon Hamm", "thumbnail": "287216668" },
   { "id": 70961941, "title": "Saint Petersburg timelapse", "thumbnail": "444625907" },
