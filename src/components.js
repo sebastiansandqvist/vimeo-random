@@ -8,7 +8,7 @@ const playerUrl = (id) => `https://player.vimeo.com/video/${id}?autoplay=1`;
 const thumbUrl = (id) => `https://i.vimeocdn.com/video/${id}_90x60.jpg`;
 
 const PlayerType = T({
-  id: T.string,
+  id: [T.string, T.int],
 });
 
 export const Player = {
@@ -27,14 +27,14 @@ export const Player = {
 };
 
 const VideoType = T.schema({
-  id: T.string,
+  id: [T.string, T.int],
   title: T.string,
   thumbnail: T.string,
 });
 
 const VideoLinkType = T({
-  index: T.int,
-  key: T.string,
+  index: [T.string, T.int],
+  key: [T.string, T.int],
   onSelection: T.fn,
   video: VideoType,
 });

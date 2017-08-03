@@ -234,7 +234,7 @@ var playerUrl = function (id) { return ("https://player.vimeo.com/video/" + id +
 var thumbUrl = function (id) { return ("https://i.vimeocdn.com/video/" + id + "_90x60.jpg"); };
 
 var PlayerType = index$1({
-  id: index$1.string,
+  id: [index$1.string, index$1.int],
 });
 
 var Player = {
@@ -255,14 +255,14 @@ var Player = {
 };
 
 var VideoType = index$1.schema({
-  id: index$1.string,
+  id: [index$1.string, index$1.int],
   title: index$1.string,
   thumbnail: index$1.string,
 });
 
 var VideoLinkType = index$1({
-  index: index$1.int,
-  key: index$1.string,
+  index: [index$1.string, index$1.int],
+  key: [index$1.string, index$1.int],
   onSelection: index$1.fn,
   video: VideoType,
 });
@@ -564,7 +564,6 @@ var db = [
   { "id": 62917185, "title": "MÅVI", "thumbnail": "433628544" },
   { "id": 157413485, "title": "Monarch Slave  Dr. Shaun D. speaks about project monarch -a conspiracy in Monarch Slavery in Canada", "thumbnail": "558689632" },
   { "id": 126267047, "title": "Sensational film footage! Berlin after the apocalypse in color and HD - Berlin In July 1945 (HD 1080p)", "thumbnail": "516655452" },
-  { "id": 145963216, "title": "Paige Spiranac Takes Golf To The Streets", "thumbnail": "544277735" },
   { "id": 113042536, "title": "Santorini Volcano History", "thumbnail": "499022377" },
   { "id": 41465466, "title": "Ask a Grown Man: Jon Hamm", "thumbnail": "287216668" },
   { "id": 70961941, "title": "Saint Petersburg timelapse", "thumbnail": "444625907" },
@@ -905,7 +904,6 @@ var db = [
   { "id": 79098420, "title": "Flexible Muscle-Based Locomotion for Bipedal Creatures", "thumbnail": "454698496" },
   { "id": 36778012, "title": "Experience Freedom", "thumbnail": "252459011" },
   { "id": 60241818, "title": "Sketchbook, February 2013", "thumbnail": "418613999" },
-  { "id": 135811823, "title": "Wet Microburst - Tucson, Arizona - August 2015", "thumbnail": "570051980" },
   { "id": 104457629, "title": "Katy Perry Uncensored Raw Talent", "thumbnail": "598053521" },
   { "id": 104403406, "title": "Game of Thrones - Season 4 â€“ Rodeo FX VFX breakdown", "thumbnail": "486934640" },
   { "id": 83647031, "title": "Belharra meets Hercules", "thumbnail": "484904416" },
