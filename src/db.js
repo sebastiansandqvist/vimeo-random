@@ -583,7 +583,6 @@ export default [
   { "id": 79098420, "title": "Flexible Muscle-Based Locomotion for Bipedal Creatures", "thumbnail": "454698496" },
   { "id": 36778012, "title": "Experience Freedom", "thumbnail": "252459011" },
   { "id": 60241818, "title": "Sketchbook, February 2013", "thumbnail": "418613999" },
-  { "id": 135811823, "title": "Wet Microburst - Tucson, Arizona - August 2015", "thumbnail": "570051980" },
   { "id": 104457629, "title": "Katy Perry Uncensored Raw Talent", "thumbnail": "598053521" },
   { "id": 104403406, "title": "Game of Thrones - Season 4 â€“ Rodeo FX VFX breakdown", "thumbnail": "486934640" },
   { "id": 83647031, "title": "Belharra meets Hercules", "thumbnail": "484904416" },
